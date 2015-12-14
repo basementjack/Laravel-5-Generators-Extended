@@ -28,7 +28,7 @@ class MigrationMakeCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Create a new migration class, and apply schema at the same time';
+    protected $description = 'Create a new migration class and apply schema at the same time';
 
     /**
      * The filesystem instance.
@@ -53,7 +53,6 @@ class MigrationMakeCommand extends Command
      * Create a new command instance.
      *
      * @param Filesystem $files
-     * @param NameParser $parser
      * @param Composer $composer
      */
     public function __construct(Filesystem $files, Composer $composer)
@@ -106,8 +105,7 @@ class MigrationMakeCommand extends Command
 
         if ($this->option('model') && !$this->files->exists($modelPath)) {
             $this->call('make:model', [
-                'name' => $this->getModelName(),
-                '--no-migration' => true
+                'name' => $this->getModelName()
             ]);
         }
     }
@@ -133,7 +131,7 @@ class MigrationMakeCommand extends Command
      */
     protected function getPath($name)
     {
-        return './database/migrations/' . date('Y_m_d_His') . '_' . $name . '.php';
+        return base_path() . '/database/migrations/' . date('Y_m_d_His') . '_' . $name . '.php';
     }
 
     /**
